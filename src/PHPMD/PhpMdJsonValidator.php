@@ -25,19 +25,19 @@ class PhpMdJsonValidator extends AbstractJsonValidator
             }
 
             foreach ($node->violations as $violation) {
-                if (!property_exists($node, 'description')) {
+                if (!property_exists($violation, 'description')) {
                     throw new InvalidJsonException('The [files.violations.description] is a required property');
                 }
 
-                if (!property_exists($node, 'beginLine')) {
+                if (!property_exists($violation, 'beginLine')) {
                     throw new InvalidJsonException('The [files.violations.beginLine] is a required property');
                 }
 
-                if (!property_exists($node, 'endLine')) {
+                if (!property_exists($violation, 'endLine')) {
                     throw new InvalidJsonException('The [files.violations.endLine] is a required property');
                 }
 
-                if (!property_exists($node, 'priority')) {
+                if (!property_exists($violation, 'priority')) {
                     throw new InvalidJsonException('The [files.violations.endLine] is a required property');
                 }
             }

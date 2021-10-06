@@ -6,7 +6,6 @@ namespace BeechIt\JsonToCodeClimateSubsetConverter\PHPMD;
 
 use BeechIt\JsonToCodeClimateSubsetConverter\AbstractConverter;
 use BeechIt\JsonToCodeClimateSubsetConverter\Exceptions\InvalidJsonException;
-use Phan\Issue;
 
 class PhpMdConvertToSubset extends AbstractConverter
 {
@@ -15,7 +14,7 @@ class PhpMdConvertToSubset extends AbstractConverter
         2 => 'major',
         3 => 'minor',
         4 => 'minor',
-        5 => 'info'
+        5 => 'info',
     ];
 
     public function convertToSubset(): void
@@ -24,23 +23,24 @@ class PhpMdConvertToSubset extends AbstractConverter
             $this->abstractJsonValidator->validateJson();
 
             foreach ($this->json->files as $file) {
-                foreach ($file->violations as $node)
-                $this->codeClimateNodes[] = [
-                    'description' => $this->createDescription($node->description),
-                    'fingerprint' => $this->createFingerprint(
-                        $node->description,
-                        $file->file,
-                        $node->beginLine + $node->endLine
-                    ),
-                    'severity' => self::SEVERITY_LEVELS[$node->priority] ?? 'major',
-                    'location' => [
-                        'path' => $file->file,
-                        'lines' => [
-                            'begin' => $node->beginLine,
-                            'end' => $node->endLine
+                foreach ($file->violations as $node) {
+                    $this->codeClimateNodes[] = [
+                        'description' => $this->createDescription($node->description),
+                        'fingerprint' => $this->createFingerprint(
+                            $node->description,
+                            $file->file,
+                            $node->beginLine
+                        ),
+                        'severity' => self::SEVERITY_LEVELS[$node->priority] ?? 'major',
+                        'location' => [
+                            'path' => $file->file,
+                            'lines' => [
+                                'begin' => $node->beginLine,
+                                'end' => $node->endLine,
+                            ],
                         ],
-                    ],
-                ];
+                    ];
+                }
             }
         } catch (InvalidJsonException $exception) {
             throw $exception;
@@ -49,6 +49,6 @@ class PhpMdConvertToSubset extends AbstractConverter
 
     public function getToolName(): string
     {
-        return 'PHPLint';
+        return 'PHPMD';
     }
 }
