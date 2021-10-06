@@ -11,6 +11,7 @@ use BeechIt\JsonToCodeClimateSubsetConverter\Phan\PhanJsonValidator;
 use BeechIt\JsonToCodeClimateSubsetConverter\PHP_CodeSniffer\PhpCodeSnifferJsonValidator;
 use BeechIt\JsonToCodeClimateSubsetConverter\PHPCSFixer\PHPCSFixerJsonValidator;
 use BeechIt\JsonToCodeClimateSubsetConverter\PHPLint\PhpLintJsonValidator;
+use BeechIt\JsonToCodeClimateSubsetConverter\PHPMD\PhpMdJsonValidator;
 use BeechIt\JsonToCodeClimateSubsetConverter\PHPStan\PHPStanJsonValidator;
 use BeechIt\JsonToCodeClimateSubsetConverter\Psalm\PsalmJsonValidator;
 use function is_null;
@@ -51,6 +52,11 @@ class ValidatorFactory implements ValidatorFactoryInterface
 
             case 'PHP-CS-Fixer':
                 $validator = new PHPCSFixerJsonValidator($json);
+
+                break;
+
+            case 'PHPMD':
+                $validator = new PhpMdJsonValidator($json);
 
                 break;
         }

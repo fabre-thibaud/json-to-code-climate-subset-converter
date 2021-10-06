@@ -13,6 +13,7 @@ use BeechIt\JsonToCodeClimateSubsetConverter\Phan\PhanConvertToSubset;
 use BeechIt\JsonToCodeClimateSubsetConverter\PHP_CodeSniffer\PhpCodeSnifferConvertToSubset;
 use BeechIt\JsonToCodeClimateSubsetConverter\PHPCSFixer\PHPCSFixerConvertToSubset;
 use BeechIt\JsonToCodeClimateSubsetConverter\PHPLint\PhpLintConvertToSubset;
+use BeechIt\JsonToCodeClimateSubsetConverter\PHPMD\PhpMdConvertToSubset;
 use BeechIt\JsonToCodeClimateSubsetConverter\PHPStan\PHPStanConvertToSubset;
 use BeechIt\JsonToCodeClimateSubsetConverter\Psalm\PsalmConvertToSubset;
 use BeechIt\JsonToCodeClimateSubsetConverter\Utilities\SafeMethods;
@@ -78,6 +79,15 @@ class ConverterFactory implements ConverterFactoryInterface
 
             case 'PHP-CS-Fixer':
                 $converter = new PHPCSFixerConvertToSubset(
+                    $validator,
+                    $json,
+                    $safeMethods
+                );
+
+                break;
+
+            case 'PHPMD':
+                $converter = new PhpMdConvertToSubset(
                     $validator,
                     $json,
                     $safeMethods

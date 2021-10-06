@@ -10,5 +10,6 @@ return [
         'PHPStan',
         'Psalm',
         'PHP-CS-Fixer',
+        'PHPMD'
     ],
 ];
